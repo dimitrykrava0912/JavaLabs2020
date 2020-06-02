@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<project default="main" basedir=".">
+    <target name="main">
+        <javadoc packagenames="com.labIII.labwork2.*"
+                 sourcepath="../src"
+                 defaultexcludes="yes"
+                 destdir="docs/api"
+                 author="true"
+                 version="false"
+                 use="false"
+                 waindowtitle="ANTdoc">
+        </javadoc>
+    </target>
+</project>

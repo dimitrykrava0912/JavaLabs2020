@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_lab2year3" default="compile.module.lab2year3">
+  <dirname property="module.lab2year3.basedir" file="${ant.file.module_lab2year3}"/>
+  
+  <property name="module.jdk.home.lab2year3" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.lab2year3" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.lab2year3" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.lab2year3" value="-encoding UTF-8 -source 9 -target 9 ${compiler.args}"/>
+  
+  <property name="lab2year3.output.dir" value="${module.lab2year3.basedir}/out/production/Lab2Year3"/>
+  <property name="lab2year3.testoutput.dir" value="${module.lab2year3.basedir}/out/test/Lab2Year3"/>
+  
+  <path id="lab2year3.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="lab2year3.module.production.classpath">
+    <path refid="${module.jdk.classpath.lab2year3}"/>
+  </path>
+  
+  <path id="lab2year3.runtime.production.module.classpath">
+    <pathelement location="${lab2year3.output.dir}"/>
+  </path>
+  
+  <path id="lab2year3.module.classpath">
+    <path refid="${module.jdk.classpath.lab2year3}"/>
+    <pathelement location="${lab2year3.output.dir}"/>
+  </path>
+  
+  <path id="lab2year3.runtime.module.classpath">
+    <pathelement location="${lab2year3.testoutput.dir}"/>
+    <pathelement location="${lab2year3.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.lab2year3">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.lab2year3">
+    <patternset refid="excluded.from.module.lab2year3"/>
+  </patternset>
+  
+  <path id="lab2year3.module.sourcepath">
+    <dirset dir="${module.lab2year3.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.lab2year3" depends="compile.module.lab2year3.production,compile.module.lab2year3.tests" description="Compile module Lab2Year3"/>
+  
+  <target name="compile.module.lab2year3.production" depends="register.custom.compilers" description="Compile module Lab2Year3; production classes">
+    <mkdir dir="${lab2year3.output.dir}"/>
+    <javac2 destdir="${lab2year3.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.lab2year3}/javac">
+      <compilerarg line="${compiler.args.lab2year3}"/>
+      <bootclasspath refid="lab2year3.module.bootclasspath"/>
+      <classpath refid="lab2year3.module.production.classpath"/>
+      <src refid="lab2year3.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.lab2year3"/>
+    </javac2>
+    
+    <copy todir="${lab2year3.output.dir}">
+      <fileset dir="${module.lab2year3.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.lab2year3.tests" depends="register.custom.compilers,compile.module.lab2year3.production" description="compile module Lab2Year3; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.lab2year3" description="cleanup module">
+    <delete dir="${lab2year3.output.dir}"/>
+    <delete dir="${lab2year3.testoutput.dir}"/>
+  </target>
+</project>
